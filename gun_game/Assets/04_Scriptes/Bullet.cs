@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    //[SerializeField] private ParticleSystem _impact;
+    [SerializeField] private ParticleSystem _impact;
     private Rigidbody _rb;
 
     private void Awake()
@@ -20,12 +20,12 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //var impactParticle = Instantiate(_impact, collision.contacts[0].point, Quaternion.identity);
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        var impactParticle = Instantiate(_impact, collision.contacts[0].point, Quaternion.identity);
+        if (collision.gameObject.layer == LayerMask.NameToLayer("King"))
         {
-            //collision.gameObject.GetComponentInParent<RagdollToggle>().TurnOnRagdoll();
+            collision.gameObject.GetComponent<King>().OnRagdoll();
         }
-        //Destroy(impactParticle.gameObject, 1);
+        Destroy(impactParticle.gameObject, 1);
         Destroy(this.gameObject);
     }
 }

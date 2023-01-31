@@ -24,6 +24,7 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("King"))
         {
             collision.gameObject.GetComponent<King>().OnRagdoll();
+            GameManager.instance.SotpSlowMotion();
         }
         Destroy(impactParticle.gameObject, 1);
         Destroy(this.gameObject);

@@ -28,6 +28,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private LayerMask _targetLayer;
     [SerializeField] private GameObject _followObject;
     private Vector3 _offset;
+    private bool isTarget = false;
 
     private void Awake()
     {
@@ -37,10 +38,16 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0) && !GameManager.instance.isSlowMotion)
         {
             var hitsTarget = Physics.Raycast(_spawnPoint.position, _spawnPoint.forward, float.PositiveInfinity, _targetLayer);
             var bullet = Instantiate(_bulletPrefab, _spawnPoint.position, _spawnPoint.rotation);
+            if (hitsTarget)
+            {
+                bullet.tag = "killKing";
+                GameManager.instance.SlowMotion();
+                isTarget = true;
+            }
             bullet.Init(_spawnPoint.forward * _bulletSpeed);
             _muzzleFlash.Play();
             _fireSource.PlayOneShot(_fireSource.clip);
@@ -58,14 +65,19 @@ public class Gun : MonoBehaviour
             var torque = _torque + amount;
             _rb.AddTorque(dir * torque);
         }
-    }
 
-    private void LateUpdate()
-    {
-        // var pos = _followObject.transform.position;
-        // pos.x = transform.position.x;
-        // pos.z = transform.position.z;
-        // _followObject.transform.position = pos + _offset;
-        _followObject.transform.position = new Vector3(transform.position.x, 1.92f, 0);
+        if (!isTarget)
+        {
+            _followObject.transform.position = new Vector3(transform.position.x, 1.92f, 0);
+        }
+        else
+        {
+            if (GameObject.FindGameObjectWithTag("killKing") == null)
+            {
+                isTarget = false;
+                return;
+            }
+            _followObject.transform.position = new Vector3(GameObject.FindGameObjectWithTag("killKing").transform.position.x, 1.92f, 0);
+        }
     }
 }

@@ -36,6 +36,8 @@ public class King : MonoBehaviour
         col.enabled = false;
         rb.isKinematic = true;
         ani.enabled = false;
+
+        GameManager.instance.OndieKing();
     }
 
     public void OffRagdoll()

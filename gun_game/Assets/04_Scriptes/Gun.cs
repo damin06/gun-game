@@ -38,7 +38,7 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !GameManager.instance.isSlowMotion)
+        if (Input.GetMouseButtonDown(0) && !GameManager.instance.isSlowMotion && !GameManager.instance.isGamePause)
         {
             var hitsTarget = Physics.Raycast(_spawnPoint.position, _spawnPoint.forward, float.PositiveInfinity, _targetLayer);
             var bullet = Instantiate(_bulletPrefab, _spawnPoint.position, _spawnPoint.rotation);

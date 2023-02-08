@@ -14,18 +14,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currentLevelTXT;
     [SerializeField] private GameObject EndGameUI;
 
-
+    [Space]
     [SerializeField] private bool isTest = true;
+
     public bool isSlowMotion = false;
     public bool isGamePause = false;
     public static GameManager instance { get; private set; }
-    public Action OndieKing;
 
 
     private InterstitialAd interstitial;
     private float fiextime;
     private float notime;
+    public Action OndieKing;
     Cinemachine.CinemachineVirtualCamera c_VirtualCamera;
+    private JSON json;
+    private Data PlayerData;
 
     private void Awake()
     {
@@ -39,12 +42,17 @@ public class GameManager : MonoBehaviour
             if (instance != this)
                 Destroy(this.gameObject);
         }
+
+        json = GetComponent<JSON>();
+        PlayerData = json.playerData;
+        json.LoadPlayerDataToJson();
     }
 
     private void Start()
     {
 
-        OndieKing += ONEndGame;
+
+        OndieKing += OnEndGameUI;
 
         fiextime = Time.fixedDeltaTime;
         notime = Time.timeScale;
@@ -69,12 +77,18 @@ public class GameManager : MonoBehaviour
         // Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
     }
 
-    public void ONEndGame()
+    private void OnEndGameUI()
     {
+        StartCoroutine(ONEndGame());
+    }
+
+    private IEnumerator ONEndGame()
+    {
+        yield return new WaitForSeconds(1);
         isGamePause = true;
         SotpSlowMotion();
         EndGameUI.SetActive(true);
-        LoadAD();
+        ShowFrontAd();
     }
 
     public void ChangeNextLevel()
@@ -82,9 +96,14 @@ public class GameManager : MonoBehaviour
         EndGameUI.SetActive(false);
         isGamePause = false;
 
+        PlayerData.currentStage++;
+        json.SavePlayerDataToJson();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        currentLevelTXT.text = "LEVEL " + SceneManager.GetActiveScene().buildIndex;
+        int currenScene = SceneManager.GetActiveScene().buildIndex + 2;
+        currentLevelTXT.text = "LEVEL " + currenScene;
     }
+
+
 
     public void RestartLEVEL()
     {
@@ -93,39 +112,6 @@ public class GameManager : MonoBehaviour
             SotpSlowMotion();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-    }
-
-    // AdRequest GetAdRequest()
-    // {
-    //     return new AdRequest.Builder().AddTestDevice("1DF7B7CC05014E8").Build();
-    // }
-
-    private void LoadAD()
-    {
-        Debug.Log("AD");
-        ShowFrontAd();
-        // this.rewardedAd = new RewardedAd("ca-app-pub-3940256099942544/1033173712");
-        // //this.interstitial = new InterstitialAd(adUnitId);
-        // AdRequest request = new AdRequest.Builder().Build();
-        // this.rewardedAd.LoadAd(request);
-        // #if UNITY_ANDROID
-        //         string adUnitId = "ca-app-pub-3940256099942544/1033173712";
-        // #elif UNITY_IPHONE
-        //         string adUnitId = "ca-app-pub-3940256099942544/4411468910";
-        // #else
-        //         string adUnitId = "unexpected_platform";
-        // #endif
-
-        //         this.interstitial = new InterstitialAd(adUnitId);
-        //         AdRequest request = new AdRequest.Builder().Build();
-        //         this.interstitial.LoadAd(request);
-
-        // frontAd = new InterstitialAd("ca-app-pub-3940256099942544/1033173712");
-        // frontAd.LoadAd(GetAdRequest());
-        // frontAd.OnAdClosed += (sender, e) =>
-        // {
-
-        // };
     }
 
     public void SlowMotion()
@@ -197,4 +183,5 @@ public class GameManager : MonoBehaviour
         if (b) bannerAd.Show();
         else bannerAd.Hide();
     }
+
 }

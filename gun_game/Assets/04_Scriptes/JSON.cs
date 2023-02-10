@@ -1,4 +1,5 @@
 using System.IO;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,24 @@ using UnityEngine.SceneManagement;
 
 public class JSON : MonoBehaviour
 {
-    public Data playerData;
+    public Data playerData = new Data();
     private bool Ismobile;
+    public static JSON instance { get; private set; }
     private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (instance != this)
+                Destroy(this.gameObject);
+        }
+    }
+
+    private void Start()
     {
 #if UNITY_ANDROID
         {
@@ -28,6 +44,7 @@ public class JSON : MonoBehaviour
     [ContextMenu("To Json Data")]
     public void SavePlayerDataToJson()
     {
+        playerData.currentStage = SceneManager.GetActiveScene().buildIndex;
         string JsonData = JsonUtility.ToJson(playerData, true);
 
         string path;
@@ -74,5 +91,4 @@ public class JSON : MonoBehaviour
 public class Data
 {
     public int currentStage;
-    public bool vibration;
 }

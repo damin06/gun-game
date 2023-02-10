@@ -6,6 +6,7 @@ TagManager:
   tags:
   - killKing
   - New tag
+  - King
   layers:
   - Default
   - TransparentFX

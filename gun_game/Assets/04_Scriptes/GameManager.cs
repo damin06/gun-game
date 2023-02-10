@@ -43,15 +43,13 @@ public class GameManager : MonoBehaviour
                 Destroy(this.gameObject);
         }
 
-        json = GetComponent<JSON>();
-        PlayerData = json.playerData;
-        json.LoadPlayerDataToJson();
+        //json = GetComponent<JSON>();
+        //PlayerData = json.playerData;
+        //json.LoadPlayerDataToJson();
     }
 
     private void Start()
     {
-
-
         OndieKing += OnEndGameUI;
 
         fiextime = Time.fixedDeltaTime;
@@ -68,11 +66,13 @@ public class GameManager : MonoBehaviour
 
         LoadFrontAd();
         LoadBannerAd();
-        ToggleBannerAd(true);
+
+        StartCoroutine(BugBannerAd());
     }
 
     void Update()
     {
+
         // Time.timeScale += (1f / 2) * Time.unscaledDeltaTime;
         // Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
     }
@@ -84,11 +84,15 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ONEndGame()
     {
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
+        //PlayerData.currentStage++;
+        //json.SavePlayerDataToJson();
+
         isGamePause = true;
         SotpSlowMotion();
         EndGameUI.SetActive(true);
         ShowFrontAd();
+        yield return null;
     }
 
     public void ChangeNextLevel()
@@ -96,9 +100,10 @@ public class GameManager : MonoBehaviour
         EndGameUI.SetActive(false);
         isGamePause = false;
 
-        PlayerData.currentStage++;
-        json.SavePlayerDataToJson();
+        JSON.instance.playerData.currentStage = SceneManager.GetActiveScene().buildIndex + 1;
+        JSON.instance.SavePlayerDataToJson();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
         int currenScene = SceneManager.GetActiveScene().buildIndex + 2;
         currentLevelTXT.text = "LEVEL " + currenScene;
     }
@@ -182,6 +187,14 @@ public class GameManager : MonoBehaviour
     {
         if (b) bannerAd.Show();
         else bannerAd.Hide();
+    }
+
+    private IEnumerator BugBannerAd()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        ToggleBannerAd(true);
+
     }
 
 }

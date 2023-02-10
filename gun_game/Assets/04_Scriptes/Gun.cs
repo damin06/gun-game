@@ -29,6 +29,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private GameObject _followObject;
     private Vector3 _offset;
     private bool isTarget = false;
+    RaycastHit hit;
 
     private void Awake()
     {
@@ -40,14 +41,23 @@ public class Gun : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !GameManager.instance.isSlowMotion && !GameManager.instance.isGamePause)
         {
-            var hitsTarget = Physics.Raycast(_spawnPoint.position, _spawnPoint.forward, float.PositiveInfinity, _targetLayer);
+            var hitsTarget = Physics.Raycast(_spawnPoint.position, _spawnPoint.forward, 15, _targetLayer);
             var bullet = Instantiate(_bulletPrefab, _spawnPoint.position, _spawnPoint.rotation);
-            if (hitsTarget)
+            if (Physics.Raycast(_spawnPoint.position, _spawnPoint.forward, out hit, 15))
             {
-                bullet.tag = "killKing";
-                GameManager.instance.SlowMotion();
-                isTarget = true;
+                if (hit.collider.tag == "King")
+                {
+                    bullet.tag = "killKing";
+                    GameManager.instance.SlowMotion();
+                    isTarget = true;
+                }
             }
+            // if (hitsTarget)
+            // {
+            //     bullet.tag = "killKing";
+            //     GameManager.instance.SlowMotion();
+            //     isTarget = true;
+            // }
             bullet.Init(_spawnPoint.forward * _bulletSpeed);
             _muzzleFlash.Play();
             _fireSource.PlayOneShot(_fireSource.clip);

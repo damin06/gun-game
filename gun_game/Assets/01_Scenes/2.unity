@@ -638,7 +638,7 @@ MonoBehaviour:
   _maxAngularVelocity: 70
   _maxBonusTorque: 100
   _forceAmount: 800
-  _maxY: 11
+  _maxY: 12
   _maxUpAssist: 45
   _targetLayer:
     serializedVersion: 2
@@ -811,8 +811,8 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: -4, y: 0}
-      - {x: -4, y: 5}
-      - {x: 4, y: 5}
+      - {x: -4, y: 8}
+      - {x: 4, y: 8}
       - {x: 4, y: 0}
 --- !u!4 &270767643
 Transform:

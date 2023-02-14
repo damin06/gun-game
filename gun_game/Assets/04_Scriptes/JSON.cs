@@ -44,7 +44,7 @@ public class JSON : MonoBehaviour
     [ContextMenu("To Json Data")]
     public void SavePlayerDataToJson()
     {
-        playerData.currentStage = SceneManager.GetActiveScene().buildIndex;
+        //playerData.currentStage = SceneManager.GetActiveScene().buildIndex + 1;
         string JsonData = JsonUtility.ToJson(playerData, true);
 
         string path;

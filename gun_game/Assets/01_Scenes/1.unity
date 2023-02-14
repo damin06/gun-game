@@ -945,8 +945,8 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: -4, y: 0}
-      - {x: -4, y: 5}
-      - {x: 4, y: 5}
+      - {x: -4, y: 8}
+      - {x: 4, y: 8}
       - {x: 4, y: 0}
 --- !u!4 &270767643
 Transform:

@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         OndieKing += OnEndGameUI;
+        OndieKing += SaveScene;
 
         fiextime = Time.fixedDeltaTime;
         notime = Time.timeScale;
@@ -100,15 +101,16 @@ public class GameManager : MonoBehaviour
         EndGameUI.SetActive(false);
         isGamePause = false;
 
-        JSON.instance.playerData.currentStage = SceneManager.GetActiveScene().buildIndex + 1;
-        JSON.instance.SavePlayerDataToJson();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
-        int currenScene = SceneManager.GetActiveScene().buildIndex + 2;
-        currentLevelTXT.text = "LEVEL " + currenScene;
+        StartCoroutine(ChangeLevelTXT());
     }
 
-
+    private IEnumerator ChangeLevelTXT()
+    {
+        yield return new WaitForSeconds(0.1f);
+        int currenScene = SceneManager.GetActiveScene().buildIndex + 1;
+        currentLevelTXT.text = "LEVEL " + currenScene;
+    }
 
     public void RestartLEVEL()
     {
@@ -191,10 +193,19 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator BugBannerAd()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
 
+        StartCoroutine(ChangeLevelTXT());
         ToggleBannerAd(true);
 
+    }
+
+    private void SaveScene()
+    {
+        string currenScene = SceneManager.GetActiveScene().name;
+        int num = Int32.Parse(currenScene);
+        JSON.instance.playerData.currentStage = num;
+        JSON.instance.SavePlayerDataToJson();
     }
 
 }

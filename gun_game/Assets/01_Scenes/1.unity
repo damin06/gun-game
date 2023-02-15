@@ -768,7 +768,7 @@ MonoBehaviour:
   _bulletSpeed: 14
   _muzzleFlash: {fileID: 1770500049}
   _fireSource: {fileID: 255895706}
-  _torque: 90
+  _torque: 100
   _maxAngularVelocity: 70
   _maxBonusTorque: 100
   _forceAmount: 800

@@ -165,11 +165,11 @@ MonoBehaviour:
   _bulletSpeed: 14
   _muzzleFlash: {fileID: 3688632638781864635}
   _fireSource: {fileID: 3571293073968187732}
-  _torque: 90
+  _torque: 100
   _maxAngularVelocity: 70
   _maxBonusTorque: 100
   _forceAmount: 800
-  _maxY: 10
+  _maxY: 25
   _maxUpAssist: 45
   _targetLayer:
     serializedVersion: 2
@@ -485,7 +485,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3571293074555033631}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.049100004, z: 0.1421}
+  m_LocalPosition: {x: -0, y: 0.049100004, z: 0.132}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4244084274989592844}
@@ -607,8 +607,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.03000001, y: 0.05023146, z: 0.22375591}
-  m_Center: {x: 1.5611123e-16, y: 0.037913222, z: 0.011379382}
+  m_Size: {x: 0.03000001, y: 0.05023146, z: 0.20471458}
+  m_Center: {x: 2.6599775e-16, y: 0.037913222, z: 0.020900035}
 --- !u!1 &3962463170940396227
 GameObject:
   m_ObjectHideFlags: 0

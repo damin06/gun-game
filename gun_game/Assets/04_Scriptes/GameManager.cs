@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject EndGameUI;
 
     [Space]
-    [SerializeField] private bool isTest = true;
+    [SerializeField] private bool isTest = false;
 
     public bool isSlowMotion = false;
     public bool isGamePause = false;
@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private float fiextime;
     private float notime;
     public Action OndieKing;
+    public Action isntKing;
     Cinemachine.CinemachineVirtualCamera c_VirtualCamera;
     private JSON json;
     private Data PlayerData;
@@ -52,6 +53,9 @@ public class GameManager : MonoBehaviour
     {
         OndieKing += OnEndGameUI;
         OndieKing += SaveScene;
+
+        isntKing += SotpSlowMotion;
+        isntKing += SwichCamToGun;
 
         fiextime = Time.fixedDeltaTime;
         notime = Time.timeScale;
@@ -100,7 +104,14 @@ public class GameManager : MonoBehaviour
     {
         EndGameUI.SetActive(false);
         isGamePause = false;
+        StartCoroutine(BugBannerAd());
 
+        if (SceneManager.GetActiveScene().name == "End")
+        {
+            SceneManager.LoadScene(0);
+            StartCoroutine(ChangeLevelTXT());
+            return;
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         StartCoroutine(ChangeLevelTXT());
     }
@@ -123,7 +134,7 @@ public class GameManager : MonoBehaviour
 
     public void SlowMotion()
     {
-        SwichCam();
+        SwichCamToBullet();
         isSlowMotion = true;
         Time.timeScale = 0.2f;
         Time.fixedDeltaTime = fiextime * .02f;
@@ -136,12 +147,20 @@ public class GameManager : MonoBehaviour
         Time.fixedDeltaTime = fiextime;
     }
 
-    private void SwichCam()
+    private void SwichCamToBullet()
     {
         c_VirtualCamera = GameObject.Find("CM vcam1").GetComponent<Cinemachine.CinemachineVirtualCamera>();
-        Transform sibal = GameObject.FindGameObjectWithTag("killKing").transform;
-        c_VirtualCamera.m_Follow = sibal.transform;
-        c_VirtualCamera.m_LookAt = sibal.transform;
+        Transform s = GameObject.FindGameObjectWithTag("killKing").transform;
+        c_VirtualCamera.m_Follow = s.transform;
+        c_VirtualCamera.m_LookAt = s.transform;
+    }
+
+    private void SwichCamToGun()
+    {
+        c_VirtualCamera = GameObject.Find("CM vcam1").GetComponent<Cinemachine.CinemachineVirtualCamera>();
+        Transform s = GameObject.FindGameObjectWithTag("Gun").transform;
+        c_VirtualCamera.m_Follow = s.transform;
+        c_VirtualCamera.m_LookAt = null;
     }
 
 
@@ -202,6 +221,12 @@ public class GameManager : MonoBehaviour
 
     private void SaveScene()
     {
+        if (SceneManager.GetActiveScene().name == "End")
+        {
+            JSON.instance.playerData.currentStage = 0;
+            JSON.instance.SavePlayerDataToJson();
+            return;
+        }
         string currenScene = SceneManager.GetActiveScene().name;
         int num = Int32.Parse(currenScene);
         JSON.instance.playerData.currentStage = num;

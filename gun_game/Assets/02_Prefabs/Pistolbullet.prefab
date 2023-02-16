@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1839833777270069779}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1830713164390598699}
   - component: {fileID: -6796785713678672906}
   - component: {fileID: 762659223513355601}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pistolbullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 3710664400022699311}
   - component: {fileID: 2743966846712014326}
   - component: {fileID: 7535243764498113196}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 8680745685547793270}
   - component: {fileID: 3484131470554028813}
   - component: {fileID: 328140418803307025}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

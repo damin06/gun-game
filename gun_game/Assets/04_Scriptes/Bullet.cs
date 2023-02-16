@@ -21,6 +21,10 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         var impactParticle = Instantiate(_impact, collision.contacts[0].point, Quaternion.identity);
+        if (this.gameObject.CompareTag("killKing") && !collision.gameObject.CompareTag("King"))
+        {
+            GameManager.instance.isntKing();
+        }
         if (collision.gameObject.layer == LayerMask.NameToLayer("King"))
         {
             collision.gameObject.GetComponent<King>().OnRagdoll();

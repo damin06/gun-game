@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Android">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/androidx.annotation.annotation-1.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidx.collection.collection-1.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidx.lifecycle.lifecycle-common-2.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidx.room.room-common-2.2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidx.arch.core.core-common-2.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidx.concurrent.concurrent-futures-1.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/com.google.guava.listenablefuture-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/androidx.lifecycle.lifecycle-common-java8-2.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

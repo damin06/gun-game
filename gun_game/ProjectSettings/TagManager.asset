@@ -7,6 +7,7 @@ TagManager:
   - killKing
   - New tag
   - King
+  - Gun
   layers:
   - Default
   - TransparentFX
@@ -14,8 +15,8 @@ TagManager:
   - King
   - Water
   - UI
-  - 
-  - 
+  - Gun
+  - Bullet
   - 
   - 
   - 

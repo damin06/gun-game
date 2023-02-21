@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public bool isSlowMotion = false;
     public bool isGamePause = false;
-    public static GameManager instance { get; private set; }
+    public static GameManager instance;
 
 
     private InterstitialAd interstitial;
